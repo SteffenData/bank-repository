@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Program</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <h1>Bank Repository Client Usage example</h1>
+    <hr/>
+<pre>
+package dk.cphbusiness.example;
+
+import javax.ws.rs.ClientErrorException;
+
+public class Program {
+  
+  public static void main(String[] args) {
+    try (BankRepositoryClient repository = new BankRepositoryClient()) {
+      System.out.println("tester created");
+      for (Bank bank : repository.list()) 
+          System.out.println(bank.getReg()+": "+bank.getName());
+      System.out.println("----");
+      Bank bank = repository.find("4711");
+      System.out.println("4711: "+bank.getName());
+      repository.save(new Bank("test-2", "Testbank 2", "http://testurl"));
+      repository.drop("3141654");
+      }
+    catch (ClientErrorException cee) {
+      System.err.println("Hovsa: "+cee.getMessage());
+      }
+    }
+
+  }
+</pre>
+  </body>
+</html>

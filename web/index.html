@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+  <head>
+    <title>Bank Repository Status</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script>
+      
+      function init() {
+        var target = document.getElementById("target");
+        var wsProtocol = (location.protocol === "https:" ? "wss:" : "ws:");
+        var ws = new WebSocket(wsProtocol+"//"+location.host+"/BankRepository/repository");
+        ws.onopen = function(event) {
+          target.innerHTML = "Opened";
+          };
+        ws.onmessage = function(event) {
+          target.innerHTML = event.data;
+          };
+        ws.onclose = function(event) {
+          target.innerHTML = "Closed";
+          };
+        }
+      
+      window.addEventListener("load", init, false);
+      
+    </script>
+  </head>
+  <body>
+    <p>Addresses:
+    <dl>
+      <dt>HTTP</dt>
+      <dd><a href="http://datdb.cphbusiness.dk:8080/BankRepository/ws/bank"
+             >http://datdb.cphbusiness.dk:8080/BankRepository/ws/bank</a></dd>
+      <dt>HTTPS</dt>
+      <dd><a href="https://datdb.cphbusiness.dk:8181/BankRepository/ws/bank"
+             >https://datdb.cphbusiness.dk:8181/BankRepository/ws/bank</a></dd>
+    </dl>
+      
+    <hr/>
+    <h1>Currently registered banks:</h1>
+    <div id="target">TODO write content</div>
+    <hr/>
+    Please find example Java classes here:
+    <ul>
+      <li><a href="BankRepositoryClient.html">BankRepositoryClient.java</a></li>
+      <li><a href="Bank.html">Bank.java</a></li>
+      <li><a href="Program.html">Program.java</a></li>
+    </ul>
+  </body>
+</html>
